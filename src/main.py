@@ -41,7 +41,10 @@ def get_predictions(user_id: int):
     for object in objects:
         name = object.object_name
         response = client.get_object(BUCKET_NAME, name)
-        df = pd.read_csv(io.BytesIO(response.data))
+        try:
+            df = pd.read_csv(io.BytesIO(response.data))
+        except pd.errors.EmptyDataError:
+            continue
         df.columns = ["userId", "movieId", "rating", "timestamp", "prediction"]
         df = df.sort_values(['userId','prediction'], ascending=[False, False])
         if df.userId.isin([user_id]).any():
