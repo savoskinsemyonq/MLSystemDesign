@@ -21,7 +21,7 @@ app.add_middleware(
 Instrumentator().instrument(app).expose(app)
 
 
-load_dotenv()
+load_dotenv(dotenv_path = '../.env')
 
 MINIO_ACCESS_KEY = os.getenv("MINIO_ACCESS_KEY")
 MINIO_SECRET_KEY = os.getenv("MINIO_SECRET_KEY")
